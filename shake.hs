@@ -11,6 +11,7 @@ import Text.Pandoc.PDF
 import Data.List ( isPrefixOf )
 
 main = shakeArgs shakeOptions $ do
+	want ["prectures"]
 	phony "prectures" $ do
 		dirs <- getDirectoryDirs "."
 		need $ fmap (<.> "pdf") . filter (not . isPrefixOf ".") $ dirs
