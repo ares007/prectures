@@ -10,6 +10,7 @@ $if(fonttheme)$
 $endif$
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
+\usepackage{textcomp} % textasciigrave
 \usepackage{fixltx2e} % provides \textsubscript
 \ifxetex
   \usepackage{fontspec,xltxtra,xunicode}
@@ -60,7 +61,8 @@ $if(listings)$
   commentstyle=\color{beamer@solarized@base01},
   emphstyle=\color{beamer@solarized@red},
   backgroundcolor=\color[rgb]{1,1,1},
-  captionpos=b
+  captionpos=b,
+  escapechar=\%
 }
 \def \lstlistingname {}
 \def \thelstlisting {2}
