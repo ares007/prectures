@@ -34,7 +34,7 @@ We never told Haskell how to compare two circles
 	               | p1x == p2x && p1y == p2y && r1 == r2 = True
 	               | otherwise = False
 
-# Context
+# Type constraints
 
 	> :t (==)
 	(==) :: (Eq a) => a -> a -> Bool
@@ -49,6 +49,18 @@ Any type, `a`{.haskell}, given that it is an instance of the class `Eq`{.haskell
 	x `elem` (y:ys) = x == y || (x `elem` ys)
 
 Since `(==)`{.haskell} requires the constraint of `Eq`{.haskell}, we must as well
+
+# Class extension
+
+`Ord`{.haskell} _inherits_ all of the operations in `Eq`{.haskell}
+
+	class (Eq a) => Ord a where
+	    (<), (<=), (>=), (>) :: a -> a -> Bool
+	    max, min             :: a -> a -> a
+
+Any type which is an instance of `Ord`{.haskell} must also be an instance of `Eq`{.haskell}
+
+	quicksort :: (Ord a) => [a] -> [a]
 
 # Numeric type classes
 
@@ -68,18 +80,6 @@ Since `(==)`{.haskell} requires the constraint of `Eq`{.haskell}, we must as wel
 	(3.3 +) :: Fractional a => a -> a
 	> 3.3 + (1 :: Int)
 	...
-
-# Class extension
-
-`Ord`{.haskell} _inherits_ all of the operations in `Eq`{.haskell}
-
-	class (Eq a) => Ord a where
-	    (<), (<=), (>=), (>) :: a -> a -> Bool
-	    max, min             :: a -> a -> a
-
-Any type which is an instance of `Ord`{.haskell} must also be an instance of `Eq`{.haskell}
-
-	quicksort :: (Ord a) => [a] -> [a]
 
 # Higher order types
 
@@ -111,7 +111,24 @@ Any type which is an instance of `Ord`{.haskell} must also be an instance of `Eq
 
 	instance Functor [] where
 	    fmap f [] = []
-	    fmap f (x:xs) = f x : xs
+	    fmap f (x:xs) = f x : fmap f xs
+
+# Applicative functors
+
+	class (Functor f) => Applicative f where
+	    pure :: a -> f a
+	    (<*>) :: f (a -> b) -> f a -> f b
+
+# Maybe
+
+	instance Applicative Maybe where
+	    pure f = Just f
+	    (Just f) <*> (Just x) = Just (f x)
+	     _       <*>  _       = Nothing
+
+	> :t (<*>)
+	(<*>) :: f (a -> b) -> f a -> f b
+	(<*>) :: Maybe (a -> b) -> Maybe a -> Maybe b
 
 # Extra slides
 
@@ -120,13 +137,22 @@ Any type which is an instance of `Ord`{.haskell} must also be an instance of `Eq
 	elem x  []     = False
 	elem x (y:ys) = x == y || (elem x ys)
 
-# Possible exam question
+# Possible exam questions
 
 What is the most general type for the function:
 
 	whichOne (a, b) | a == b    = a
 	                | otherwise = a + 1
 
+What is a valid `functor`{.haskell} definition for `Maybe`{.haskell}:
+
+	data Maybe a = Just a
+	             | Nothing
+
 # Answer
 
 	whichOne :: (Eq a, Num a) => (a, a) -> a
+
+	instance Functor Maybe where
+	    fmap f (Just a) = Just (f a)
+	    fmap _ Nothing = Nothing
