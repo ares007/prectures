@@ -12,8 +12,8 @@ import qualified Data.ByteString.Lazy as BL
 main = shakeArgs shakeOptions $ do
 	want ["prectures"]
 	phony "prectures" $ do
-		dirs <- getDirectoryDirs "."
-		need $ fmap (<.> "pdf") . filter (not . isPrefixOf ".") $ dirs
+		dirs <- fmap (filter $ not . isPrefixOf ".") $ getDirectoryDirs "."
+		need $ fmap (<.> "pdf") dirs
 	"*.pdf" *> subdirToBeamer
 	phony "clean" $ do
 		putNormal $ "removing pdf files"
