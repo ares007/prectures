@@ -19,26 +19,31 @@ main = shakeArgs shakeOptions $ do
 		putNormal $ "removing pdf files"
 		liftIO $ removeFiles "." ["//*.pdf"]
 
-subdirToBeamer dir = do
-	let mdin = dropExtension dir </> "slides.md"
+subdirToBeamer pdf = do
+	let dir = dropExtension pdf
+	let mdin = dir </> "slides.md"
 	need [mdin]
-	putNormal $ "pandoc " ++ dir
+	putNormal $ "pandoc " ++ pdf
 	contents <- readFileLines mdin
 	template <- readFileLines $ "template.tex"
+	etheme <- doesFileExist $ dir </> "theme"
+	ectheme <- doesFileExist $ dir </> "colortheme"
+	let theme = if etheme then "logic" else "intridea"
+	let ctheme = if ectheme then "slush" else "solarized"
 	liftIO $ do
-		slides <- mdToBeamer (unlines template) (unlines contents)
+		slides <- mdToBeamer (theme, ctheme) dir (unlines template) (unlines contents)
 		case slides of
-			Right s -> BL.writeFile dir s
+			Right s -> BL.writeFile pdf s
 			Left s -> print s
 
-mdToBeamer template = makePDF "pdflatex" writeLaTeX (options template) . readMarkdown def
+mdToBeamer (theme, ctheme) path template = makePDF "pdflatex" writeLaTeX (options (theme, ctheme) path template) . readMarkdown def
 
-options template = def
+options (theme, ctheme) path template = def
 	{
 		writerBeamer = True,
 		writerStandalone = True,
 		writerListings = True,
 		writerSlideLevel = Just 1,
 		writerTemplate = template,
-		writerVariables = [("theme", "intridea"), ("colortheme", "solarized"), ("fontsize", "14pt")]
+		writerVariables = [("theme", theme), ("colortheme", ctheme), ("fontsize", "14pt"), ("graphicspath", path)]
 	}

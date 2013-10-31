@@ -40,12 +40,12 @@ $if(listings)$
   upquote=true,
   columns=fixed,
   numbers=left,
-  numberstyle=\tiny\color{beamer@solarized@base01},
+  numberstyle=\tiny\color{beamer@$colortheme$@base01},
   numbersep=5pt,
   tabsize=2,
   extendedchars=true,
   breaklines=true,
-  frame=single,
+%  frame=\fframe,
   showspaces=false,
   showtabs=false,
   xleftmargin=0pt,
@@ -55,12 +55,12 @@ $if(listings)$
   framexbottommargin=0pt,
   showstringspaces=false,
   basicstyle=\footnotesize\ttfamily,
-  keywordstyle=\color{beamer@solarized@green},
-  stringstyle=\color{beamer@solarized@cyan}\ttfamily,
-  identifierstyle=\color{beamer@solarized@blue},
-  commentstyle=\color{beamer@solarized@base01},
-  emphstyle=\color{beamer@solarized@red},
-  backgroundcolor=\color[rgb]{1,1,1},
+  keywordstyle=\color{beamer@$colortheme$@green},
+  stringstyle=\color{beamer@$colortheme$@cyan}\ttfamily,
+  identifierstyle=\color{beamer@$colortheme$@blue},
+  commentstyle=\color{beamer@$colortheme$@base01},
+  emphstyle=\color{beamer@$colortheme$@red},
+  backgroundcolor=\color{beamer@$colortheme$@background},
   captionpos=b,
   escapechar=\%
 }
@@ -156,6 +156,9 @@ $if(author)$
 $endif$
 $if(date)$
 \date{$date$}
+$endif$
+$if(graphicspath)$
+\graphicspath{{$graphicspath$/}}
 $endif$
 
 \begin{document}
