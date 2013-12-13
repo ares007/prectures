@@ -30,25 +30,25 @@
 
 * Sensitivity test on cache associativity
 
-# Actual future
+# Improving the Load/Store Queue
 
 ![](barrel-vs-sos.pdf)
 
-# Actual future
-
-![](cache-associativity-speedup.pdf)
-
-# Actual future
-
-![](hardware-vs-software.pdf)
-
-# Actual future
+# Improving the Load/Store Queue
 
 ![](rollback-reduce.pdf)
 
-# Actual future
+# Varying Strands Per Core
 
 ![](strands-per-core.pdf)
+
+# Rasterization: Hardware vs. Software
+
+![](hardware-vs-software.pdf)
+
+# Varying Cache Size and Associativity
+
+![](cache-associativity-speedup.pdf)
 
 # --
 
