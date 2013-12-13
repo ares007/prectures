@@ -30,10 +30,25 @@
 
 * Sensitivity test on cache associativity
 
-# Learning
+# Actual future
 
-* Background as far away from hardware/architecture as possible
-* Learning a lot
+![](barrel-vs-sos.pdf)
+
+# Actual future
+
+![](cache-associativity-speedup.pdf)
+
+# Actual future
+
+![](hardware-vs-software.pdf)
+
+# Actual future
+
+![](rollback-reduce.pdf)
+
+# Actual future
+
+![](strands-per-core.pdf)
 
 # --
 
